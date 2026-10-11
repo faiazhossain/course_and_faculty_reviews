@@ -1,7 +1,7 @@
 import sys
 import json
 
-def get_code(course, folder="History", max_posts=60):
+def get_code(course, folder="History & Philosophy", max_posts=60):
     with open("raw/collector.js", "r", encoding="utf-8") as f:
         collector_code = f.read()
     
@@ -10,8 +10,9 @@ def get_code(course, folder="History", max_posts=60):
     return header + collector_code
 
 if __name__ == "__main__":
-    course = sys.argv[1] if len(sys.argv) > 1 else "his101"
-    code = get_code(course)
+    course = sys.argv[1] if len(sys.argv) > 1 else "phi101"
+    folder = sys.argv[2] if len(sys.argv) > 2 else "History & Philosophy"
+    code = get_code(course, folder)
     with open("raw/current_injection.js", "w", encoding="utf-8") as f:
         f.write(code)
-    print(f"Generated raw/current_injection.js for {course} (length: {len(code)})")
+    print(f"Generated raw/current_injection.js for {course} in '{folder}' (length: {len(code)})")

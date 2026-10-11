@@ -1,4 +1,4 @@
-window.__fbTargetName = "History/q_his205.json";
+window.__fbTargetName = "Law/q_law200.json";
 window.__fbTargetMax = 60;
 // Sent through Selenium execute_script on the Facebook group search page. args: [outputName, maxPosts]
 // Progress lives on disk through the localhost sink tab because Facebook clears localStorage on reload.
@@ -151,8 +151,12 @@ async function readComments(k) {
     if (x && !x.closest('a[href]') && x.tagName !== 'A') { x.click(); await sleep(1500); }
     else { document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', code: 'Escape', keyCode: 27, bubbles: true})); await sleep(1500); }
   }
-  if (!location.href.includes('search/?q=') && document.querySelector('[role=feed]')) {
-    try { history.replaceState(null, '', SEARCH_URL); } catch (e) {}
+  if (!location.href.includes('search/?q=')) {
+    try { window.history.back(); } catch (e) {}
+    await sleep(1000);
+    if (!location.href.includes('search/?q=') && document.querySelector('[role=feed]')) {
+      try { history.replaceState(null, '', SEARCH_URL); } catch (e) {}
+    }
   }
   return {comments, permalink};
 }
